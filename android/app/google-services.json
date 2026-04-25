@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "494227860865",
+    "project_id": "ecosnapapp-e19f7",
+    "storage_bucket": "ecosnapapp-e19f7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:494227860865:android:95b7c891da5f6b9da2cc80",
+        "android_client_info": {
+          "package_name": "com.example.ecosnap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "494227860865-qvrodc7smef5vfrqk2nnled0un6gbd9k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA7ro-1p_uWShPcPV6EfleMUw0AsWisC8I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "494227860865-qvrodc7smef5vfrqk2nnled0un6gbd9k.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "494227860865-2c9k8oci02clocdms2gmdb14ts9umi68.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ecosnap"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
