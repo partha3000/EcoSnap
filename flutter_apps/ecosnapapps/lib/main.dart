@@ -1,3 +1,4 @@
+import 'package:ecosnapapps/pages/admin_approval.dart';
 import 'package:ecosnapapps/pages/home.dart';
 import 'package:ecosnapapps/pages/login.dart';
 import 'package:ecosnapapps/pages/onboarding.dart';
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: LogIn(),
+      home: AdminApproval(),
     );
   }
 }
