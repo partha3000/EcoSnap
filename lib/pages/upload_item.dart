@@ -61,16 +61,22 @@ class _UploadItemState extends State<UploadItem> {
                   Material(
                     elevation: 3.0,
                     borderRadius: BorderRadius.circular(60),
-                    child: Container(
-                      padding: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        color: Colors.black,
-                        borderRadius: BorderRadius.circular(60),
-                      ),
-                      child: Icon(
-                        Icons.arrow_back_ios_new_rounded,
-                        color: Colors.white,
-                        size: 30.0,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(60),
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.all(6.0),
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(60),
+                        ),
+                        child: Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Colors.white,
+                          size: 30.0,
+                        ),
                       ),
                     ),
                   ),

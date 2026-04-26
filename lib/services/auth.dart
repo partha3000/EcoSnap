@@ -35,6 +35,7 @@ class AuthMethods {
         "name":userDetails.displayName,
         "image": userDetails.photoURL,
         "id": userDetails.uid,
+        "Points":"0",
       };
      await DatabaseMethods(). addUserInfo(userinfoMap, userDetails.uid);
      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage()));

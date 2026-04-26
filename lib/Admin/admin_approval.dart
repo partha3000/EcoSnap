@@ -25,6 +25,26 @@ class _AdminApprovalState extends State<AdminApproval> {
     super.initState();
   }
 
+  Future<String?> getUserPoints(String docId) async {
+    try {
+      DocumentSnapshot docSnapshot = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(docId)
+          .get();
+
+      if (docSnapshot.exists) {
+        var data = docSnapshot.data() as Map<String, dynamic>;
+        var points = data ['Points'];
+        return points.toString();
+      } else {
+        return 'No document';
+      }
+    } catch (e) {
+      print('Error: $e');
+      return 'Error';
+    }
+  }
+
   Widget allApprovals() {
     return StreamBuilder(
       stream: approvalStream,
@@ -35,10 +55,11 @@ class _AdminApprovalState extends State<AdminApproval> {
                 itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
                   DocumentSnapshot ds = snapshot.data.docs[index];
+
                   return Container(
                     margin: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
                     child: Material(
-                      elevation: 3.0,
+                      elevation: 2.0,
                       borderRadius: BorderRadius.circular(20),
                       child: Container(
                         padding: EdgeInsets.all(15.0),
@@ -114,19 +135,28 @@ class _AdminApprovalState extends State<AdminApproval> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 15.0),
-                                Container(
-                                  height: 40,
-                                  width: 200,
-                                  margin: EdgeInsets.only(left: 80.0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      "Approval",
-                                      style: AppWidget.whitetextstyle(20.0),
+                                SizedBox(height: 5.0),
+                                GestureDetector(
+                                  onTap: () async {
+                                    String? userpoints = await getUserPoints(ds["UserId"]);
+                                    int updatepoints = int.parse(userpoints!)+100;
+                                    await DatabaseMethods().updateUserPoints(ds["UserId"], updatepoints.toString());
+                                    await DatabaseMethods().updateAdminRequest(ds.id,);
+                                    await DatabaseMethods().updateUserRequest(ds["UserId"], ds.id,);
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 200,
+                                    margin: EdgeInsets.only(left: 80.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        "Approval",
+                                        style: AppWidget.whitetextstyle(20.0),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -204,7 +234,10 @@ class _AdminApprovalState extends State<AdminApproval> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(height: 20.0),
-                    Expanded(child: allApprovals()),
+                    Container(
+                      height: MediaQuery.of(context).size.height / 1.5,
+                      child: allApprovals(),
+                    ),
                   ],
                 ),
               ),

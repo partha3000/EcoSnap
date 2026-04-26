@@ -55,7 +55,7 @@ class _LogInState extends State<LogIn> {
                               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(60)),
                               child: Image.asset("images/google.png", height: 35, width: 35, fit: BoxFit.cover,),),
                             SizedBox(width: 15.0,),
-                            Text("Sing in with Google", style: AppWidget.whitetextstyle(20.0),),
+                            Text("Sign in with Google", style: AppWidget.whitetextstyle(20.0),),
                           ],
                         ),
                       ),
