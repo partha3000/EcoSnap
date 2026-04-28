@@ -1,3 +1,4 @@
+import 'package:ecosnap/pages/buttomnav.dart';
 import 'package:ecosnap/pages/home.dart';
 import 'package:ecosnap/services/database.dart';
 import 'package:ecosnap/services/shared_perf.dart';
@@ -38,7 +39,7 @@ class AuthMethods {
         "Points":"0",
       };
      await DatabaseMethods(). addUserInfo(userinfoMap, userDetails.uid);
-     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> HomePage()));
+     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> BottomNav()));
     }
   }
 }

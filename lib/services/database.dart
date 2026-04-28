@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DatabaseMethods {
   Future addUserInfo(Map<String, dynamic> userInfoMap, String id) async {
@@ -87,5 +89,12 @@ class DatabaseMethods {
     return await FirebaseFirestore.instance.collection("users").doc(id).update({
       "Points": points,
     });
+  }
+  Future SignOut() async{
+    await FirebaseAuth.instance.signOut();
+  }
+  Future deleteuser() async{
+    User? user = await FirebaseAuth.instance.currentUser;
+    user?.delete();
   }
 }

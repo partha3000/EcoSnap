@@ -33,12 +33,8 @@ class _LogInState extends State<LogIn> {
               SizedBox(height: 35.0,),
               GestureDetector(
                 onTap: (){
-                  // AuthMethods().signInWithGoogle(context);
-                },
-                child: GestureDetector(
-                  onTap: () {
                     AuthMethods().signInWithGoogle(context);
-                  },
+                },
                   child: Container(
                     margin: EdgeInsets.only(left: 20.0, right: 20.0),
                     child: Material(
@@ -62,7 +58,6 @@ class _LogInState extends State<LogIn> {
                     ),
                   ),
                 ),
-              ),
               SizedBox(height: 50.0,),
             ],
           ),
