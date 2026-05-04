@@ -32,9 +32,8 @@ class DatabaseMethods {
   }
 
   Future<Stream<QuerySnapshot>> getAdminApproval() async {
-    return await FirebaseFirestore.instance
+    return FirebaseFirestore.instance
         .collection("Requests")
-        .where("Status", isEqualTo: "Pending")
         .snapshots();
   }
 
@@ -46,14 +45,19 @@ class DatabaseMethods {
         .snapshots();
   }
 
-  Future updateAdminRequest(String id) async {
+  Future updateAdminRequest(
+    String id,
+  ) async {
     return await FirebaseFirestore.instance
         .collection("Requests")
         .doc(id)
         .update({"Status": "Approval"});
   }
 
-  Future updateUserRequest(String id, String itemid) async {
+  Future updateUserRequest(
+    String id,
+    String itemid,
+  ) async {
     return await FirebaseFirestore.instance
         .collection("users")
         .doc(id)
@@ -90,10 +94,12 @@ class DatabaseMethods {
       "Points": points,
     });
   }
-  Future SignOut() async{
+
+  Future SignOut() async {
     await FirebaseAuth.instance.signOut();
   }
-  Future deleteuser() async{
+
+  Future deleteuser() async {
     User? user = await FirebaseAuth.instance.currentUser;
     user?.delete();
   }

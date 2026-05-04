@@ -2,7 +2,7 @@ import 'package:ecosnap/services/database.dart';
 import 'package:ecosnap/services/shared_perf.dart';
 import 'package:flutter/material.dart';
 import '../services/widget_support.dart';
-import 'login.dart'; // 👉 make sure this exists
+import 'login.dart'; //  make sure this exists
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -163,7 +163,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  // ✅ Reusable Profile Tile
+  // Reusable Profile Tile
   Widget profileTile(IconData icon, String title, String value) {
     return Material(
       elevation: 3.0,
@@ -200,7 +200,7 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  // ✅ Reusable Action Tile
+  // Reusable Action Tile
   Widget actionTile(
       IconData icon, String text, Color textColor) {
     return Material(
