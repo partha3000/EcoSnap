@@ -15,6 +15,7 @@ class Points extends StatefulWidget {
 
 class _PointsState extends State<Points> {
   String? id, mypoints, name;
+  Stream<QuerySnapshot>? pointsStream;
 
   getthesharedpref() async {
     id = await SharedpreferenceHelper().getUserId();
@@ -25,12 +26,12 @@ class _PointsState extends State<Points> {
   ontheload() async {
     await getthesharedpref();
     mypoints = await getUserPoints(id!);
+    pointsStream = await DatabaseMethods().getUserTransactions(id!);
     setState(() {});
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     ontheload();
   }
@@ -56,6 +57,138 @@ class _PointsState extends State<Points> {
       print('Error: $e');
       return 'Error';
     }
+  }
+
+  Widget allApprovals() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: pointsStream,
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        if (snapshot.hasError) {
+          return Center(child: Text("Error: ${snapshot.error}"));
+        }
+
+        if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+          return Center(child: Text("No Requests Found"));
+        }
+
+        return ListView.builder(
+          padding: EdgeInsets.zero,
+          itemCount: snapshot.data!.docs.length,
+          itemBuilder: (context, index) {
+            DocumentSnapshot ds = snapshot.data!.docs[index];
+
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: Material(
+                borderRadius: BorderRadius.circular(20),
+                elevation: 2,
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black45, width: 2),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Image.asset(
+                          "images/cola.png",
+                          height: 100,
+                          width: 100,
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+
+                      SizedBox(width: 20),
+
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(Icons.person, color: Colors.green),
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: Text(
+                                    ds["Name"]?.toString() ?? "No Name",
+                                    style: AppWidget.normaltextstyle(18),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            Row(
+                              children: [
+                                Icon(Icons.location_on, color: Colors.green),
+                                SizedBox(width: 5),
+                                Expanded(
+                                  child: Text(
+                                    ds["Address"]?.toString() ?? "No Address",
+                                    style: AppWidget.normaltextstyle(18),
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            Row(
+                              children: [
+                                Icon(Icons.inventory, color: Colors.green),
+                                SizedBox(width: 5),
+                                Text(
+                                  ds["Quantity"]?.toString() ?? "0",
+                                  style: AppWidget.normaltextstyle(18),
+                                ),
+                              ],
+                            ),
+
+                            SizedBox(height: 5.0),
+                            GestureDetector(
+                              onTap: () async {
+                                await DatabaseMethods().updateAdminRequest(
+                                  ds.id,
+                                );
+                                await DatabaseMethods().updateUserRequest(
+                                  "UserID",
+                                  ds.id,
+                                );
+                              },
+                              child: Container(
+                                height: 40,
+                                width: 150,
+                                margin: EdgeInsets.only(left: 120),
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    "Approval",
+                                    style: AppWidget.whitetextstyle(18),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   @override
@@ -167,43 +300,7 @@ class _PointsState extends State<Points> {
                                     "Last Transactions",
                                     style: AppWidget.normaltextstyle(20.0),
                                   ),
-                                  SizedBox(height: 20.0,),
-                                  Container(
-                                    padding: EdgeInsets.all(10),
-                                    margin: EdgeInsets.only(left: 30, right: 30),
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
-                                      color: Color.fromARGB(255, 233, 233, 249), borderRadius: BorderRadius.circular(20)
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                            color: Colors.black,borderRadius: BorderRadius.circular(10),
-                                          ),
-                                          child: Text(
-                                            "04\nApr",
-                                            textAlign: TextAlign.center,
-                                            style: AppWidget.whitetextstyle(25),
-                                          ),
-                                        ),
-                                        SizedBox(width: 20.0,),
-                                        Column(
-                                          children: [
-                                            Text("Reedem Points", style: AppWidget.normaltextstyle(20.0),),
-                                            Text("0", style: AppWidget.greentextstyle(26.0),)
-                                          ],
-                                        ),
-                                        SizedBox(width: 40.0,),
-                                        Container(
-                                          padding: EdgeInsets.all(10),
-                                          decoration: BoxDecoration(color: Color.fromARGB(48, 241, 77, 66), borderRadius: BorderRadius.circular(10)),
-                                          child: Text("Pending", style: TextStyle(color: Colors.red,fontSize: 18.0, fontWeight: FontWeight.bold),),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                  SizedBox(height: 20.0),
                                 ],
                               ),
                             ),

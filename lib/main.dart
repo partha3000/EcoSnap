@@ -1,9 +1,11 @@
 import 'package:ecosnap/Admin/admin_approval.dart';
+import 'package:ecosnap/Admin/admin_reedem.dart';
 import 'package:ecosnap/pages/buttomnav.dart';
 import 'package:ecosnap/pages/home.dart';
 import 'package:ecosnap/pages/login.dart';
-import 'package:ecosnap/pages/onboarding.dart';
+import 'package:ecosnap/pages/points.dart';
 import 'package:ecosnap/pages/upload_item.dart';
+import 'package:ecosnap/pages/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
 
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: AdminApproval(),
+      home: OnboardingPage(),
     );
   }
 }

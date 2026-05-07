@@ -37,7 +37,7 @@ class DatabaseMethods {
         .snapshots();
   }
 
-  Future<Stream<QuerySnapshot>> getUserTransaction(String id) async {
+  Future<Stream<QuerySnapshot>> getUserTransactions(String id) async {
     return await FirebaseFirestore.instance
         .collection("users")
         .doc(id)
